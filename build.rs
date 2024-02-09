@@ -6,7 +6,8 @@ use std::path::PathBuf;
 use vcpkg;
 
 // const MINIMUM_LEPT_VERSION: &str = "1.80.0";
-
+const LEPTONICA_VERSION: &str = "1.84.1";
+const LIBS_PATH: &str = "resources/libs/";
 #[cfg(windows)]
 fn find_leptonica_system_lib() -> Option<String> {
     println!("cargo:rerun-if-env-changed=LEPTONICA_INCLUDE_PATH");
@@ -75,8 +76,23 @@ fn find_leptonica_system_lib() -> Option<String> {
     None
 }
 
+fn find_bundled_leptonica_lib() -> Option<String> {
+    let mut leptonica_dir = LIBS_PATH.to_string();
+    leptonica_dir.push_str("leptonica/");
+    leptonica_dir.push_str(LEPTONICA_VERSION);
+    let mut leptonica_lib_dir = leptonica_dir.clone();
+    leptonica_lib_dir.push_str("/lib");
+    let mut leptonica_include_dir = leptonica_dir.clone();
+    leptonica_include_dir.push_str("/include");
+
+    println!("cargo:rustc-link-search=native={}", leptonica_lib_dir);
+    println!("cargo:rustc-link-lib=leptonica");
+
+    Some(leptonica_include_dir)
+}
+
 fn main() {
-    let clang_extra_include = find_leptonica_system_lib();
+    let clang_extra_include = find_bundled_leptonica_lib();
 
     let mut bindings = bindgen::Builder::default().header("wrapper.h");
 

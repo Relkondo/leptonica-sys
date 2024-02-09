@@ -1,13 +1,13 @@
 [package]
 name = "leptonica-sys"
 version = "0.4.7"
-authors = ["Chris Couzens <ccouzens@gmail.com>"]
+authors = ["Samuel Coron <coronsamuel@gmail.com>", "Chris Couzens <ccouzens@gmail.com>"]
 edition = "2018"
 links = "lept"
 build = "build.rs"
 description = "FFI bindings for Leptonica"
 license = "MIT"
-repository = "https://github.com/ccouzens/leptonica-sys"
+repository = "https://github.com/relkondo/leptonica-sys"
 keywords = ["leptonica"]
 categories = ["api-bindings", "multimedia::images"]
 
